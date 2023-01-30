@@ -2,7 +2,7 @@ const net = require("net");
 const { send } = require("process");
 
 const server = net.createServer();
-const serverPort = 4000;
+const serverPort = 5151;
 
 const connections = new Map();
 
@@ -26,8 +26,8 @@ server.listen(serverPort, () => {
             if ( !connections.has(socket)) {
                 let isRegistered =false;
                 connections.forEach((nickname) => {
-                    if (nickname == data) {
-                        socket.write('The name that you are trying to use is occuped, try to use other name. \nChoose your username: ');
+                    if (nickname == data && nickname===data) {
+                        socket.write('The name that you are trying to use is occupied, try to use other name. \nChoose your username: ');
                         isRegistered=true;
                     }
                 });
@@ -58,7 +58,7 @@ server.listen(serverPort, () => {
         });
 
         socket.on("close", () => {
-            console.log("communication end with ", connections.get(socket));
+            console.log(connections.get(socket)," exits the chat ");
             connections.delete(socket);
         });
     });
